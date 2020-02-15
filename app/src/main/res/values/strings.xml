@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">NewsFeed</string>
+    <string name="url_server">https://newsapi.org/v2/</string>
+    <string name="content_title">.newsitem__title.link-holder</string>
+    <string name="content_description">.newsitem__text</string>
+    <string name="content_imageURL">.photo__inner</string>
+    <string name="news_preview">.article__item.article__item_alignment_left.article__item_html</string>
+
+    <string name="current_news">Current News</string>
+    <string name="news_in_browser">News in Browser</string>
+    <string name="to_browser">To browser</string>
+</resources>

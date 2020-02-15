@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="indent_edge_text">40dp</dimen>
+    <dimen name="margin_top">30dp</dimen>
+    <dimen name="text_size">14sp</dimen>
+    <dimen name="stroke">5dp</dimen>
+</resources>
