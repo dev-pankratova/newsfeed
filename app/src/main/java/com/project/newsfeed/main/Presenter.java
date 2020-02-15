@@ -1,5 +1,7 @@
 package com.project.newsfeed.main;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.project.newsfeed.NewsModelApi;
@@ -15,12 +17,19 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Presenter {
+public class Presenter implements MainContract.Presenter {
+    public Presenter(MainContract.View view) {
+        this.view = view;
+    }
+
     static final String BASE_URL = "https://newsapi.org/v2/";
     private static final String TAG = "myLogs";
+    private MainContract.View view;
+    private List<NewsModel> newsList = new ArrayList<>();
 
-    public void start(){
-        Gson gson = new GsonBuilder()
+    @Override
+    public void start() {
+       Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
@@ -35,12 +44,8 @@ public class Presenter {
         call.enqueue(new Callback<ArticlesList>() {
             @Override
             public void onResponse(Call<ArticlesList> call, Response<ArticlesList> response) {
-                List<NewsModel> myModel = new ArrayList<>();
-                if (response.isSuccessful()){
-                    ArticlesList articlesList = response.body();
-                    List<NewsModel> newsModelList = articlesList.articles;
-
-                }
+                assert response.body() != null;
+                view.newsData(response.body().articles);
             }
 
             @Override
@@ -48,6 +53,15 @@ public class Presenter {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onNewsClicked(int position) {
+        if (position > newsList.size()) return; //todo show error
+        NewsModel model = newsList.get(position);
+        if (model == null) return; //todo show error
+        view.openPreview(model);
+        Log.d(TAG, String.valueOf(position));
     }
 
   /*  private void newsRecycler (NewsModel newsModel){

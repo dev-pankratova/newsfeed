@@ -1,8 +1,11 @@
 package com.project.newsfeed.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class NewsModel {
+public class NewsModel implements Parcelable {
     @SerializedName("title")
     public String title;
     @SerializedName("description")
@@ -21,6 +24,26 @@ public class NewsModel {
         this.urlImage = urlImage;
         this.content = content;
     }
+
+    protected NewsModel(Parcel in) {
+        title = in.readString();
+        description = in.readString();
+        url = in.readString();
+        urlImage = in.readString();
+        content = in.readString();
+    }
+
+    public static final Creator<NewsModel> CREATOR = new Creator<NewsModel>() {
+        @Override
+        public NewsModel createFromParcel(Parcel in) {
+            return new NewsModel(in);
+        }
+
+        @Override
+        public NewsModel[] newArray(int size) {
+            return new NewsModel[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -60,5 +83,19 @@ public class NewsModel {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(description);
+        dest.writeString(url);
+        dest.writeString(urlImage);
+        dest.writeString(content);
     }
 }

@@ -1,6 +1,7 @@
 package com.project.newsfeed.main;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,19 @@ import com.bumptech.glide.Glide;
 import com.project.newsfeed.R;
 import com.project.newsfeed.model.NewsModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ListViewHolder> {
-    Context mContext;
-    private List<NewsModel> mItem;
+    private Context mContext;
+
+    @NonNull
+    private List<NewsModel> items = new ArrayList<>();
     View.OnClickListener mClickListener;
 
-    public Adapter(@NonNull Context context, @NonNull List<NewsModel> item) {
+    Adapter(@NonNull Context context, View.OnClickListener clickListener) {
         this.mContext = context;
-        this.mItem = item;
+        this.mClickListener = clickListener;
     }
 
     @NonNull
@@ -37,36 +41,34 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ListViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        holder.tvTitle.setText(mItem.get(position).getTitle());
-        holder.tvDescr.setText(mItem.get(position).getDescription());
-        String url = mItem.get(position).getUrlImage();
+        holder.tvTitle.setText(Html.fromHtml(items.get(position).getTitle()));
+        holder.tvDescr.setText(items.get(position).getDescription());
+        String url = items.get(position).getUrlImage();
         Glide.with(mContext)
                 .load(url)
                 .centerCrop()
                 .error(R.drawable.ic_launcher_background)
                 .into(holder.img);
-
     }
-
 
     @Override
     public int getItemCount() {
-        return mItem.size();
+        return items.size();
     }
 
-    void setItem (List<NewsModel> items){
-        this.mItem = items;
+    void setItems(List<NewsModel> items) {
+        this.items = items;
         notifyDataSetChanged();
     }
 
-    public void setClickListener(View.OnClickListener callback) {
-        mClickListener = callback;
+    List<NewsModel> getItems() {
+        return items;
     }
 
-    public class ListViewHolder extends RecyclerView.ViewHolder{
-    private ImageView img;
-    private TextView tvTitle;
-    private TextView tvDescr;
+    class ListViewHolder extends RecyclerView.ViewHolder{
+        private ImageView img;
+        private TextView tvTitle;
+        private TextView tvDescr;
 
         private ListViewHolder(@NonNull View itemView) {
             super(itemView);
