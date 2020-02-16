@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".model.WebViewLoad" />
+        <activity android:name=".WebViewLoad" />
         <activity
             android:name=".PreviewPage"
             android:label="@string/news_preview" />

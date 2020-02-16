@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private RecyclerView recyclerView;
     private Adapter mAdapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,30 +31,26 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Presenter presenter = new Presenter(this);
         presenter.start();
 
-
         mAdapter = new Adapter(this, v -> {
             int position = recyclerView.getChildAdapterPosition(v);
             presenter.onNewsClicked(position);
         });
+
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
-
     }
 
     @Override
     public void newsData(List<NewsModel> models) {
         mAdapter.setItems(models);
-
     }
 
     @Override
     public void openPreview(NewsModel model) {
-        Intent intent = new Intent(MainActivity.this, PreviewPage.class);
+        Intent intent = new Intent(this, PreviewPage.class);
         intent.putExtra(MODEL_KEY, model);
         startActivity(intent);
     }
-
 }
-

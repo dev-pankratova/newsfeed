@@ -1,4 +1,4 @@
-package com.project.newsfeed.model;
+package com.project.newsfeed;
 
 import androidx.appcompat.app.AppCompatActivity;
 

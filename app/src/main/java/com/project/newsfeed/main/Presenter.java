@@ -18,18 +18,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Presenter implements MainContract.Presenter {
-    public Presenter(MainContract.View view) {
-        this.view = view;
-    }
-
     static final String BASE_URL = "https://newsapi.org/v2/";
     private static final String TAG = "myLogs";
     private MainContract.View view;
     private List<NewsModel> newsList = new ArrayList<>();
+    public Presenter(MainContract.View view) {
+        this.view = view;
+    }
 
     @Override
     public void start() {
-       Gson gson = new GsonBuilder()
+        Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
 
@@ -45,7 +44,8 @@ public class Presenter implements MainContract.Presenter {
             @Override
             public void onResponse(Call<ArticlesList> call, Response<ArticlesList> response) {
                 assert response.body() != null;
-                view.newsData(response.body().articles);
+                newsList = response.body().articles;
+                view.newsData(newsList);
             }
 
             @Override
@@ -63,32 +63,4 @@ public class Presenter implements MainContract.Presenter {
         view.openPreview(model);
         Log.d(TAG, String.valueOf(position));
     }
-
-  /*  private void newsRecycler (NewsModel newsModel){
-        Adapter mAdapter = new Adapter(this, newsModel);
-
-    }*/
-   /* private void writeRecycler (ArticlesList articlesList){
-        try {
-            JSONObject obj = new JSONObject(response);
-
-            if (obj.optString("status").equals("true")){
-                ArrayList<NewsModel> newsModelArrayList = new ArrayList<>();
-                JSONArray dataArray = obj.getJSONArray("data");
-
-                for (int i = 0; i < dataArray.length(); i++){
-
-                    JSONObject dataobj = dataArray.getJSONObject(i);
-                    NewsModel newsModel = new NewsModel();
-
-
-                    newsModelArrayList.add(newsModel);
-
-                }
-            }
-
-        } catch (JSONException e){
-            e.printStackTrace();
-        }
-    }*/
 }

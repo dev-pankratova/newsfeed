@@ -18,5 +18,6 @@ public interface MainContract {
         void newsData(List<NewsModel> models);
 
         void openPreview(NewsModel model);
+        //void showError (String message);
     }
 }

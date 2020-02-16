@@ -61,9 +61,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ListViewHolder> {
         notifyDataSetChanged();
     }
 
-    List<NewsModel> getItems() {
+   /* List<NewsModel> getItems() {
         return items;
-    }
+    }*/
 
     class ListViewHolder extends RecyclerView.ViewHolder{
         private ImageView img;
